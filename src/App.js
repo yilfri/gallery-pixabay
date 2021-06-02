@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Form from './components/Form';
+import ListImages from './components/ListImages';
 
 function App() {
 	const [find, setFind] = useState('');
+	const [images, setImages] = useState([]);
 
 	useEffect(() => {
 		const getApi = async () => {
@@ -15,7 +17,7 @@ function App() {
 			const data = await fetch(url);
 			const result = await data.json();
 
-			console.log(result.hits);
+			setImages(result.hits);
 		};
 		getApi();
 	}, [find]);
@@ -25,6 +27,9 @@ function App() {
 			<div className="jumbotron">
 				<p className="lead text-center">Buscador de Imágenes</p>
 				<Form setFind={setFind} />
+			</div>
+			<div className="row justify-content-center">
+				<ListImages images={images} />
 			</div>
 		</div>
 	);

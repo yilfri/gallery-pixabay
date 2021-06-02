@@ -14,17 +14,19 @@ function App() {
 
 			const apiKey = '9159736-11b78348c31e7ac7313e8adb7';
 			const perPage = 20;
-			const url = `https://pixabay.com/api/?key=${apiKey}&q=${find}&image_type=photo&per_page=${perPage}`;
+			const url = `https://pixabay.com/api/?key=${apiKey}&q=${find}&image_type=photo&per_page=${perPage}&page=${actualPage}`;
 
 			const data = await fetch(url);
 			const result = await data.json();
 
 			setTotalPages(Math.ceil(result.totalHits / perPage));
 			setImages(result.hits);
-			console.log(Math.ceil(result.totalHits / perPage));
+
+			const jumbotron = document.querySelector('.jumbotron');
+			jumbotron.scrollIntoView({ behavior: 'smooth' });
 		};
 		getApi();
-	}, [find]);
+	}, [find, actualPage]);
 
 	const previusPage = () => {
 		const newActualPage = actualPage - 1;
@@ -51,13 +53,17 @@ function App() {
 			<div className="row justify-content-center">
 				<ListImages images={images} />
 
-				<button type="button" className="bbtn btn-info mr-1 " onClick={previusPage}>
-					&laquo; Anterior
-				</button>
+				{actualPage === 1 ? null : (
+					<button type="button" className="bbtn btn-info mr-1 " onClick={previusPage}>
+						&laquo; Anterior
+					</button>
+				)}
 
-				<button type="button" className="bbtn btn-info " onClick={nextPage}>
-					Siguiente &raquo;
-				</button>
+				{actualPage === totalPages ? null : (
+					<button type="button" className="bbtn btn-info " onClick={nextPage}>
+						Siguiente &raquo;
+					</button>
+				)}
 			</div>
 		</div>
 	);

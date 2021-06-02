@@ -8,6 +8,7 @@ const Picture = ({ picture }) => {
 				<img src={previewURL} alt={tags} className="card-img-top" />
 				<div className="card-body">
 					<p className="card-text">{likes} Me gusta</p>
+
 					<p className="card-text">{views} Vistas</p>
 				</div>
 				<div className="card-footer">
